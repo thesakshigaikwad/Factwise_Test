@@ -1,0 +1,37 @@
+public class HouseRobber {
+
+    public static int rob(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+
+        // Rob the first house and not the last
+        int firstRob = robRange(nums, 0, nums.length - 2);
+
+        // Rob the last house and not the first
+        int lastRob = robRange(nums, 1, nums.length - 1);
+
+        // Take the maximum of the two scenarios
+        return Math.max(firstRob, lastRob);
+    }
+
+    private static int robRange(int[] nums, int start, int end) {
+        int prevMax = 0;
+        int currentMax = 0;
+
+        for (int i = start; i <= end; i++) {
+            int temp = currentMax;
+            currentMax = Math.max(prevMax + nums[i], currentMax);
+            prevMax = temp;
+        }
+
+        return currentMax;
+    }
+
+    public static void main(String[] args) {
+        int[] houses = {2, 3, 2};
+        int maxAmount = rob(houses);
+
+        System.out.println("Maximum amount of money you can rob: " + maxAmount);
+    }
+}
